@@ -9,11 +9,12 @@ class Product extends Model
     protected $table = 'products';
     protected $fillable = [
         'nama',
-        'email',
-        'password',
-        'no_hp',
-        // timestamps
+        'harga',
+        'gambar',
+        'deskripsi',
     ];
+
+    public $timestamp = false;
 
     // relasi di bawah ...
 
