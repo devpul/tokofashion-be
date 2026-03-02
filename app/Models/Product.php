@@ -14,8 +14,7 @@ class Product extends Model
         'deskripsi',
     ];
 
-    public $timestamp = false;
+    public $timestamps = false;
 
     // relasi di bawah ...
-
 }
