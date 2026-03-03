@@ -121,4 +121,17 @@ class ProductController extends Controller
             'message'   =>  'Berhasil Menghapus Data Produk.'
         ], 200);
     }
+
+    public function search(Request $request)
+    {
+        $productName = $request->query('name');
+        $products = Product::where('nama', 'LIKE', '%' . $productName . '%')->get();
+        if ($products->isEmpty()) return response()->json(['status' => 'error', 'message' => 'Produk Tidak Ditemukan.'], 404);
+        
+         return response()->json([
+            'status'    =>  'success',
+            'message'   =>  'Berhasil Mengambil Data Produk.',
+            'data'      =>  $products
+        ], 200);
+    }
 }
