@@ -9,6 +9,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// =================================================================================== USER
 Route::get('/users', [UserController::class, 'index']);
 
-Route::post('/product', [ProductController::class, 'store']);
+// =================================================================================== PRODUCT
+Route::get('/products', [ProductController::class, 'index']);
+Route::post('/products', [ProductController::class, 'store']);
+Route::put('/products/{id}', [ProductController::class, 'update']);
