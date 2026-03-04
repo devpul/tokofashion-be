@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -78,12 +79,11 @@ class ProductController extends Controller
         $validated = $this->validateProduct($request, 'store');
         if (! is_array($validated)) return $validated;
 
-        $product = Product::create([
-            'nama'      =>  $validated['nama'],
-            'harga'     =>  $validated['harga'],
-            'gambar'    =>  $validated['gambar'] ?? null,
-            'deskripsi' =>  $validated['deskripsi'] ?? null,
-        ]);
+        if ($request->hasFile('gambar')) {
+           $validated['gambar'] = $request->file('gambar')->store('products', 'public');
+        }
+
+        $product = Product::create($validated);
 
         return response()->json([
             'status'    =>  'success',
