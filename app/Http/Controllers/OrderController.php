@@ -93,4 +93,15 @@ class OrderController extends Controller
             'order' =>  $order
         ]);
     }
+
+    public function history(Request $request)
+    {
+        $user_id = $request->user()->id;
+        $orders = Order::where('user_id', $user_id)->first();
+
+        return response()->json([
+            'message'   =>  'Riwayat Berhasil Ditampilkan.',
+            'orders'    =>  $orders
+        ]);
+    }
 }

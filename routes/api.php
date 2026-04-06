@@ -25,4 +25,5 @@ Route::get('/products/search', [ProductController::class, 'search']);
 // =================================================================================== ORDER
 Route::get('/order', [OrderController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/order', [OrderController::class, 'store'])->middleware('auth:sanctum');
-Route::post('konfirmasi', [OrderController::class, 'konfirmasi'])->middleware('auth:sanctum');
+Route::post('/konfirmasi', [OrderController::class, 'konfirmasi'])->middleware('auth:sanctum');
+Route::get('/history', [OrderController::class, 'history'])->middleware('auth:sanctum');
