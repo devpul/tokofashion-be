@@ -145,4 +145,10 @@ class ProductController extends Controller
             'data'      =>  $products
         ], 200);
     }
+
+    public function topProducts()
+    {
+        $products = Product::withCount('orders')->orderByDesc('orders_count')->limit(3)->get();
+        return response()->json($products);
+    }
 }

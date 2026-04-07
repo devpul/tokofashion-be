@@ -21,6 +21,7 @@ Route::post('/products', [ProductController::class, 'store']);
 Route::put('/products/{id}', [ProductController::class, 'update']);
 Route::delete('/products/{id}', [ProductController::class, 'delete']);
 Route::get('/products/search', [ProductController::class, 'search']);
+Route::get('/top-products', [ProductController::class, 'topProducts']);
 
 // =================================================================================== ORDER
 Route::get('/order', [OrderController::class, 'index'])->middleware('auth:sanctum');
