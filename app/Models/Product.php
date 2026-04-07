@@ -16,5 +16,8 @@ class Product extends Model
 
     public $timestamps = false;
 
-    // relasi di bawah ...
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

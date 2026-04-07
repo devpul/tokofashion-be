@@ -47,7 +47,7 @@ class ProductController extends Controller
 
             if ($action == 'store')  $validator = Validator::make($request->all(), $rules_store, $message_store);
             if ($action == 'update')  $validator = Validator::make($request->all(), $rules_update, $message_update);
-            
+
             if ($validator->fails()) {
                 return response()->json([
                     'status'    =>  'error',
@@ -66,6 +66,17 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
+
+        return response()->json([
+            'status'        =>  'success',
+            'message'       =>  'Berhasil Mengambil Semua Data Produk',
+            'data'          =>  $products,
+        ], 200);
+    }
+
+    public function show($id)
+    {
+        $products = Product::where('id', $id)->with('orders')->get();
 
         return response()->json([
             'status'        =>  'success',
@@ -93,16 +104,16 @@ class ProductController extends Controller
     }
 
     public function update(Request $request, $id)
-    {   
+    {
         $validated = $this->validateProduct($request, 'update');
         if (! is_array($validated)) return $validated;
 
         $product = Product::find($id);
 
         if (! $product) return response()->json(['status' => 'error', 'message' => 'Produk Tidak Ditemukan.'], 404);
-        
+
         $product->update($validated);
-        
+
         return response()->json([
             'status'    =>  'success',
             'message'   =>  'Berhasil Memperbarui Data Produk.',
@@ -114,7 +125,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         if (! $product) return response()->json(['status' => 'error', 'message' => 'Produk Tidak Ditemukan.'], 404);
-    
+
         $product->delete();
         return response()->json([
             'status'    =>  'success',
@@ -127,7 +138,7 @@ class ProductController extends Controller
         $productName = $request->query('name');
         $products = Product::where('nama', 'LIKE', '%' . $productName . '%')->get();
         if ($products->isEmpty()) return response()->json(['status' => 'error', 'message' => 'Produk Tidak Ditemukan.'], 404);
-        
+
          return response()->json([
             'status'    =>  'success',
             'message'   =>  'Berhasil Mengambil Data Produk.',
